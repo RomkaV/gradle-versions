@@ -26,27 +26,29 @@ def getDate() {
 
  versioning {
     scm = 'git'
-    releaseBuild = true
-    releaseParser = { scmInfo, separator = '/' ->
-        List<String> part = scmInfo.branch.split('/')
-        new net.nemerosa.versioning.ReleaseInfo(type: part[0], base: part[1])
-    }
+    // releaseBuild = true
+    // releaseParser = { scmInfo, separator = '/' ->
+    //     List<String> part = scmInfo.branch.split('/')
+    //     new net.nemerosa.versioning.ReleaseInfo(type: part[0], base: part[1])
+    // }
     dirtySuffix = "-SNAPSHOT-${getDate()}"
 
-    // // build = getDate()
-    dirty = { version -> "${version}${dirtySuffix}" }
+    // // // build = getDate()
+    // dirty = { version -> "${version}${dirtySuffix}" }
 
     // releaseMode = 'release' 	// how to compute version on release-branches
-    // displayMode = 'snapshot'	// how to compute version on non-release-branches
+    // // displayMode = 'snapshot'	// how to compute version on non-release-branches
     // // dirty = { t -> t }		// switch off dirty-suffix ( could be usefull for local development )
 
-    // /**
-    //  * Computation of the full version
-    //  */
+    // // /**
+    // //  * Computation of the full version
+    // //  */
+    // // full = { scmInfo -> "${scmInfo.lastTag}-${scmInfo.abbreviated}" }
     // full = { scmInfo -> "${scmInfo.lastTag}-${scmInfo.abbreviated}" }
 
-    releases = ['release']
-    lastTagPattern = /(\d+)$/
+
+    // releases = ['release']
+    // lastTagPattern = /(\d+)$/
 }
 
 // version = versioning.info.full
