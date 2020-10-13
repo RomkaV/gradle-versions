@@ -43,7 +43,7 @@ def getDate() {
     // /**
     //  * Computation of the full version
     //  */
-    full = { scmInfo -> "${scmInfo.lastTag}-${scmInfo.abbreviated}" }
+    // full = { scmInfo -> "${scmInfo.lastTag}-${scmInfo.abbreviated}" }
 
     // releases = ['release']
     lastTagPattern = /(\d+)$/
