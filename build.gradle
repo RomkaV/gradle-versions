@@ -1,0 +1,69 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven { url "https://repo.spring.io/plugins-release" }
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url "https://packages.confluent.io/maven/" }
+    }
+    dependencies {
+        classpath "gradle.plugin.com.gorylenko.gradle-git-properties:gradle-git-properties:1.5.2"
+        //jhipster-needle-gradle-buildscript-dependency - JHipster will add additional gradle build script plugins here
+    }
+}
+
+plugins {
+        // id "net.nemerosa.versioning" version "2.8.2"
+        id 'net.nemerosa.versioning' version '2.7.1'
+        // id 'me.qoomon.git-versioning' version '2.1.1'
+}
+
+def getDate() {
+    def date = new Date()
+    def formattedDate = date.format('yyyyMMddHHmm')
+    return formattedDate
+}
+
+ versioning {
+    scm = 'git'
+    releaseBuild = true
+    releaseParser = { scmInfo, separator = '/' ->
+        List<String> part = scmInfo.branch.split('/')
+        new net.nemerosa.versioning.ReleaseInfo(type: part[0], base: part[1])
+    }
+    dirtySuffix = "-SNAPSHOT-${getDate()}"
+
+    // // build = getDate()
+    dirty = { version -> "${version}${dirtySuffix}" }
+
+    // releaseMode = 'release' 	// how to compute version on release-branches
+    // displayMode = 'snapshot'	// how to compute version on non-release-branches
+    // // dirty = { t -> t }		// switch off dirty-suffix ( could be usefull for local development )
+
+    // /**
+    //  * Computation of the full version
+    //  */
+    full = { scmInfo -> "${scmInfo.lastTag}-${scmInfo.abbreviated}" }
+
+    // releases = ['release']
+    lastTagPattern = /(\d+)$/
+}
+
+// version = versioning.info.full
+
+subprojects {
+    apply plugin: 'java'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        testCompile 'junit:junit:4.11'
+    }
+}
+
+allprojects {
+    version = versioning.info.full
+    // version = version
+}
